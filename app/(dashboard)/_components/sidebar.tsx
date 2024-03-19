@@ -1,4 +1,5 @@
 import Logo from "@/app/(dashboard)/_components/logo";
+import SidebarRoutes from "@/app/(dashboard)/_components/sidebar-routes";
 
 const Sidebar = () => {
     return (
@@ -7,7 +8,7 @@ const Sidebar = () => {
                 <Logo />
             </div>
             <div className={"flex flex-col w-full"}>
-
+                <SidebarRoutes />
             </div>
         </div>
     );
