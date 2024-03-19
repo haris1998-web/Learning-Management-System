@@ -1,4 +1,3 @@
-import React from 'react';
 import Sidebar from "@/app/(dashboard)/_components/sidebar";
 
 const DashboardLayout = ({children}: {children: React.ReactNode}) => {
