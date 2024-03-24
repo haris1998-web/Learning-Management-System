@@ -5,7 +5,7 @@ import axios from "axios";
 
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
-import {useRouter} from "next/router";
+import {useRouter} from "next/navigation";
 
 import {
     Form,
@@ -18,7 +18,6 @@ import {
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import {router} from "next/client";
 import toast from "react-hot-toast";
 
 
@@ -29,7 +28,7 @@ const formSchema = z.object({
 })
 
 const CreatePage = () => {
-
+    const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -41,8 +40,9 @@ const CreatePage = () => {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const response = await axios.post("/api/course", values);
-            router.push(`/teacher/courses/{${response.data.id}`);
+            const response = await axios.post("/api/courses", values);
+            router.push(`/teacher/courses/${response.data.id}`);
+            toast.success("Course created");
         } catch (e) {
             toast.error("Something went wrong");
         }
@@ -54,7 +54,8 @@ const CreatePage = () => {
                 <h1 className={"text-2xl"}>
                     Name your course
                 </h1>
-                <p>What would you like to name your course? Don't worry you can change it later.</p>
+                {/* eslint-disable-next-line react/no-unescaped-entities */}
+                <p>What would you like to name your course? Don&apos;t worry you can change it later.</p>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-8 mt-8"}>
                         <FormField name={"title"} control={form.control} render={({field}) => (
